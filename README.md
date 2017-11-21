@@ -14,8 +14,9 @@ BlacklistNvidia.sh makes Grub load Nouveau instead of Nvidia drivers on normal b
 * Fedora 26
 
 ## Instructions
-* After installing Nvidia drivers, run BlacklistNvidia.sh with root privileges.
-* Rerun the script after a kernel update will make the created entry use the new kernel.
+* If you'd like to use the drivers with Secure Boot on, run SignNvidia.sh.
+* After installing Nvidia drivers, run BlacklistNvidia.sh.
+* Rerun the script(s) after a kernel update will make the created entry use the new kernel.
 
 ## Caution
 The script overwrites /etc/grub.d/40_custom.

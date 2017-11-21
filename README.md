@@ -6,17 +6,17 @@ BlacklistNvidia.sh makes Grub load Nouveau instead of Nvidia drivers on normal b
 [Why this method is preferred over Bumblebee?](https://superdanby.github.io/Blog/dealing-with-nvidia-optimus.html)
 
 ## Prerequisites
-* UEFI
-* Nvidia driver
+*   UEFI
+*   Nvidia driver
 
 ## Supported Operating Systems
-* Fedora 27
-* Fedora 26
+*   Fedora 27
+*   Fedora 26
 
 ## Instructions
-* If you'd like to use the drivers with Secure Boot on, run SignNvidia.sh.
-* After installing Nvidia drivers, run BlacklistNvidia.sh.
-* Rerun the script(s) after a kernel update will make the created entry use the new kernel.
+*   If you'd like to use the drivers with Secure Boot on, run SignNvidia.sh.
+*   After installing Nvidia drivers, run BlacklistNvidia.sh.
+*   Rerun the script(s) after a kernel update will make the created entry use the new kernel.
 
 ## Caution
 The script overwrites /etc/grub.d/40_custom.

@@ -22,4 +22,5 @@ BlacklistNvidia.sh makes Grub load Nouveau instead of Nvidia drivers on normal b
 The script overwrites /etc/grub.d/40_custom.
 
 ## Issues
-Nouveau seems to be blocked by kernel 4.13 when Nvidia is installed(?)
+Nouveau seems to be blocked from Gnome's right click menu with kernel 4.13.12 and above when Nvidia is installed(?)
+But it works fine if you start an application with `DRI_PRIME=1` from terminal.

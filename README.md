@@ -3,7 +3,7 @@ If you installed Nvidia drivers through negativo17.org or RPMfusion, the Nvidia 
 
 BlacklistNvidia.sh makes Grub load Nouveau instead of Nvidia drivers on normal basis and creates a new entry which loads Nvidia drivers.
 
-[Why this method is preferred over Bumblebee?](https://superdanby.github.io/Blog/dealing-with-nvidia-optimus.html)
+[Why is this method preferred over Bumblebee?](https://superdanby.github.io/Blog/dealing-with-nvidia-optimus.html)
 
 ## Prerequisites
 *   UEFI
@@ -14,13 +14,13 @@ BlacklistNvidia.sh makes Grub load Nouveau instead of Nvidia drivers on normal b
 *   Fedora 26
 
 ## Instructions
-*   If you'd like to use the drivers with Secure Boot on, run SignNvidia.sh.
 *   After installing Nvidia drivers, run BlacklistNvidia.sh.
+*   If you'd like to use the drivers with Secure Boot on, run SignNvidia.sh.
 *   Rerun the script(s) after a kernel update will make the created entry use the new kernel.
 
 ## Caution
 The script overwrites /etc/grub.d/40_custom.
 
 ## Issues
-Nouveau seems to be blocked from Gnome's right click menu with kernel 4.13.12 and above when Nvidia is installed(?)
+<del>Nouveau seems to be blocked from Gnome's right click menu with kernel 4.13.12 and above when Nvidia is installed(?)</del>
 But it works fine if you start an application with `DRI_PRIME=1` from terminal.

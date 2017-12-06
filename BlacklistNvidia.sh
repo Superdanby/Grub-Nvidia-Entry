@@ -21,7 +21,7 @@ if [[ `sudo cat /etc/default/grub | grep GRUB_CMDLINE | grep modprobe.blacklist=
     printf "GRUB_CMDLINE is at line $Nline.\n"
     sudo sed -i "${Nline}s/\"/\ modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm\"/2" /etc/default/grub
 else
-    printf "modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset is already in the boot options.:\n$OldKerPara\n"
+    printf "modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm is already in the boot options.:\n$OldKerPara\n"
 fi
 
 # Enables nouveau by default

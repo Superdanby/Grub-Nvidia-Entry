@@ -45,7 +45,7 @@ if [[ `sudo cat /etc/grub.d/40_custom | grep rd.driver.blacklist=nouveau` == '' 
     sudo sed -i '/vmlinuz/s/$/ rd.driver.blacklist=nouveau/' /etc/grub.d/40_custom
 fi
 if [[ `sudo cat /etc/grub.d/40_custom | grep modprobe.blacklist=nouveau` == '' ]]; then
-    sudo sed -i '/vmlinuz/s/$/ modprobe.blacklist=nouveau' /etc/grub.d/40_custom
+    sudo sed -i '/vmlinuz/s/$/ modprobe.blacklist=nouveau/' /etc/grub.d/40_custom
 fi
 if [[ `sudo cat /etc/grub.d/40_custom | grep nvidia-drm.modeset=1` == '' ]]; then
     sudo sed -i '/vmlinuz/s/$/ nvidia-drm.modeset=1/' /etc/grub.d/40_custom

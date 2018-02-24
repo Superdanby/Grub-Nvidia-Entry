@@ -26,6 +26,7 @@ fi
 
 # Enables nouveau by default
 sudo sed -i 's/\<rd.driver.blacklist=nouveau\> //g' /etc/default/grub
+sudo sed -i 's/\<modprobe.blacklist=nouveau\> //g' /etc/default/grub
 sudo sed -i 's/\<nvidia-drm.modeset=1\> //g' /etc/default/grub
 
 sudo cat /etc/default/grub
@@ -42,6 +43,9 @@ exec tail -n +3 \$0
 
 if [[ `sudo cat /etc/grub.d/40_custom | grep rd.driver.blacklist=nouveau` == '' ]]; then
     sudo sed -i '/vmlinuz/s/$/ rd.driver.blacklist=nouveau/' /etc/grub.d/40_custom
+fi
+if [[ `sudo cat /etc/grub.d/40_custom | grep modprobe.blacklist=nouveau` == '' ]]; then
+    sudo sed -i '/vmlinuz/s/$/ modprobe.blacklist=nouveau/' /etc/grub.d/40_custom
 fi
 if [[ `sudo cat /etc/grub.d/40_custom | grep nvidia-drm.modeset=1` == '' ]]; then
     sudo sed -i '/vmlinuz/s/$/ nvidia-drm.modeset=1/' /etc/grub.d/40_custom

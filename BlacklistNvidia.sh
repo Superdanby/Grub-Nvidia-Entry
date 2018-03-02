@@ -66,13 +66,16 @@ sudo cat /etc/grub.d/40_custom
 
 sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
-Nvpath="/usr/src/`ls /usr/src/ | grep nvidia`"
+# Runs only if the modules are unavailable.
+if [[ `sudo find /lib/ -name nvidia.ko | grep $Curnel` == '' ]]; then
+    Nvpath="/usr/src/`ls /usr/src/ | grep nvidia`"
 
-printf "\nMaking Nvidia modules...\n"
-sudo make -C $Nvpath
+    printf "\nMaking Nvidia modules...\n"
+    sudo make -C $Nvpath
 
-printf "\nInstalling Nvidia modules...\n"
-sudo make -C $Nvpath modules_install
+    printf "\nInstalling Nvidia modules...\n"
+    sudo make -C $Nvpath modules_install
 
-printf "\nCleaning up...\n"
-sudo make -C $Nvpath clean
+    printf "\nCleaning up...\n"
+    sudo make -C $Nvpath clean    
+fi

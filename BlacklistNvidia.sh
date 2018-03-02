@@ -65,3 +65,14 @@ fi
 sudo cat /etc/grub.d/40_custom
 
 sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+
+Nvpath="/usr/src/`ls /usr/src/ | grep nvidia`"
+
+printf "\nMaking Nvidia modules...\n"
+sudo make -C $Nvpath
+
+printf "\nInstalling Nvidia modules...\n"
+sudo make -C $Nvpath modules_install
+
+printf "\nCleaning up...\n"
+sudo make -C $Nvpath clean

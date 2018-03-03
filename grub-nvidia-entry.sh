@@ -1,15 +1,17 @@
+#!/bin/sh
 # https://github.com/Superdanby/Grub-Nvidia-Entry
 
 Curnel=`uname -r`
-if [[ `sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/fedora/grub.cfg | sed '/}/q' | grep $Curnel` == '' ]];then
-    printf "You are not on the latest kernel!\n"
-    printf "Do you wish to proceed?\n"
-    select yn in "Yes" "No"; do
-        case $yn in
-            Yes ) break;;
-            No ) exit;;
-        esac
-    done
+if [[ $1 != '-f' && $1 != '--force' ]];then
+	if [[ `sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/fedora/grub.cfg | sed '/}/q' | grep $Curnel` == '' ]];then
+		printf "\nYou are not on the latest curnel.\n\n"
+		exit
+	fi
+
+	if [[ `sudo find /lib/modules/$Curnel -name nvidia?*` != '' ]];then
+		printf "\nNvidia modules are present already.\n\n"
+		exit
+	fi
 fi
 
 printf "\nTo ensure Gnome detects the dGPU, switcheroo-control.service has to be kept alive.\n\n"
@@ -20,19 +22,18 @@ if [[ `sudo cat /usr/lib/systemd/system/switcheroo-control.service | grep Restar
     sudo sed -i '/Restart=/s/$/\nRestartSec=5s/' /usr/lib/systemd/system/switcheroo-control.service
 fi
 
-sudo cat /usr/lib/systemd/system/switcheroo-control.service
+# sudo cat /usr/lib/systemd/system/switcheroo-control.service
 
-printf "\n----------------------\n\n"
+# printf "\n----------------------\n\n"
 printf "Configuring GRUB Menu...\n"
-printf "Original boot options with Nvidia modules disabled:\n"
-OldKerPara=`sudo cat /etc/default/grub | grep GRUB_CMDLINE`
+# OldKerPara=`sudo cat /etc/default/grub | grep GRUB_CMDLINE`
 if [[ `sudo cat /etc/default/grub | grep GRUB_CMDLINE | grep modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm` == '' ]]; then
     Nline=`sudo grep -n GRUB_CMDLINE /etc/default/grub | cut -d : -f 1`
     # KernelPara="${OldKerPara::-1} modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset\""
-    printf "GRUB_CMDLINE is at line $Nline.\n"
+    # printf "GRUB_CMDLINE is at line $Nline.\n"
     sudo sed -i "${Nline}s/\"/\ modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm\"/2" /etc/default/grub
-else
-    printf "modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm is already in the boot options.:\n$OldKerPara\n"
+# else
+#     printf "modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm is already in the boot options.:\n$OldKerPara\n"
 fi
 
 # Enables nouveau by default
@@ -40,9 +41,9 @@ sudo sed -i 's/\<rd.driver.blacklist=nouveau\> //g' /etc/default/grub
 sudo sed -i 's/\<modprobe.blacklist=nouveau\> //g' /etc/default/grub
 sudo sed -i 's/\<nvidia-drm.modeset=1\> //g' /etc/default/grub
 
-sudo cat /etc/default/grub
+# sudo cat /etc/default/grub
 
-printf "\nNew boot menu entry with Nvidia modules enabled:\n"
+printf "\nCreating new boot menu entry with Nvidia modules enabled...\n"
 
 echo "\
 #!/bin/sh
@@ -62,7 +63,7 @@ if [[ `sudo cat /etc/grub.d/40_custom | grep nvidia-drm.modeset=1` == '' ]]; the
     sudo sed -i '/vmlinuz/s/$/ nvidia-drm.modeset=1/' /etc/grub.d/40_custom
 fi
 
-sudo cat /etc/grub.d/40_custom
+# sudo cat /etc/grub.d/40_custom
 
 sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
@@ -77,5 +78,7 @@ if [[ `sudo find /lib/ -name nvidia.ko | grep $Curnel` == '' ]]; then
     sudo make -C $Nvpath modules_install
 
     printf "\nCleaning up...\n"
-    sudo make -C $Nvpath clean    
+    sudo make -C $Nvpath clean
 fi
+
+printf "\nSuccess! Changes will take effect on next boot."

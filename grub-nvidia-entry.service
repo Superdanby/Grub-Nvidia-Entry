@@ -1,0 +1,9 @@
+[Unit]
+Description=Grub Nvidia Entry
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/grub-nvidia-entry.sh
+
+[Install]
+WantedBy=multi-user.target

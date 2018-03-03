@@ -15,6 +15,7 @@ openssl req -new -x509 -newkey rsa:2048 -keyout ~/MOK.priv -outform DER -out ~/M
 sudo /usr/src/kernels/$(uname -r)/scripts/sign-file sha256 ~/MOK.priv ~/MOK.der $(modinfo -n nvidia)
 sudo /usr/src/kernels/$(uname -r)/scripts/sign-file sha256 ~/MOK.priv ~/MOK.der $(modinfo -n nvidia_drm)
 sudo /usr/src/kernels/$(uname -r)/scripts/sign-file sha256 ~/MOK.priv ~/MOK.der $(modinfo -n nvidia_modeset)
+sudo /usr/src/kernels/$(uname -r)/scripts/sign-file sha256 ~/MOK.priv ~/MOK.der $(modinfo -n nvidia_uvm)
 printf "Enter the password to enroll MOK.\n"
 sudo mokutil --import ~/MOK.der
 printf "Please reboot to finish the process with MOK."

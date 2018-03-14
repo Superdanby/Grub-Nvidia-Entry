@@ -65,6 +65,7 @@ fi
 
 # sudo cat /etc/grub.d/40_custom
 
+sudo chmod 744 /etc/grub.d/40_custom
 sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 
 # Runs only if the modules are unavailable.

@@ -18,7 +18,7 @@ install:
 	-sudo rm /etc/systemd/system/grub-nvidia-entry.service || true
 	-sudo mv /etc/grub.d/40_custom.bak /etc/grub.d/40_custom || true
 	-sudo mv /usr/lib/systemd/system/switcheroo-control.service.bak /usr/lib/systemd/system/switcheroo-control.service || true
-	sudo mv /usr/lib/systemd/system/switcheroo-control.service /usr/lib/systemd/system/switcheroo-control.service.bak
+	sudo cp /usr/lib/systemd/system/switcheroo-control.service /usr/lib/systemd/system/switcheroo-control.service.bak
 	sudo mv /etc/grub.d/40_custom /etc/grub.d/40_custom.bak
 	sudo cp grub-nvidia-entry.service /etc/systemd/system
 	sudo cp grub-nvidia-entry.sh /usr/bin

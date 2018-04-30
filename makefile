@@ -1,4 +1,3 @@
-
 .PHONY: disable enable force install run sign uninstall
 
 run:
@@ -19,7 +18,7 @@ install:
 	-sudo mv /etc/grub.d/40_custom.bak /etc/grub.d/40_custom || true
 	-sudo mv /usr/lib/systemd/system/switcheroo-control.service.bak /usr/lib/systemd/system/switcheroo-control.service || true
 	sudo cp /usr/lib/systemd/system/switcheroo-control.service /usr/lib/systemd/system/switcheroo-control.service.bak
-	sudo mv /etc/grub.d/40_custom /etc/grub.d/40_custom.bak
+	sudo cp /etc/grub.d/40_custom /etc/grub.d/40_custom.bak
 	sudo cp grub-nvidia-entry.service /etc/systemd/system
 	sudo cp grub-nvidia-entry.sh /usr/bin
 	sudo chmod 775 /usr/bin/grub-nvidia-entry.sh

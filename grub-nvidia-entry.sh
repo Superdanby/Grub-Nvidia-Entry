@@ -4,11 +4,11 @@
 Curnel=`uname -r`
 if [[ $1 != '-f' && $1 != '--force' ]];then
 	if [[ `sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/fedora/grub.cfg | sed '/}/q' | grep $Curnel` == '' ]];then
-		printf "\nYou are not on the latest curnel.\n\n"
+		printf "\nYou are not on the latest kernel.\n\n"
 		exit
 	fi
 
-	if [[ `sudo find /lib/modules/$Curnel -name nvidia?*` != '' ]];then
+	if [[ `sudo cat /etc/grub.d/40_custom | grep 'https://github.com/Superdanby/Grub-Nvidia-Entry'` == '' || `sudo find /lib/modules/$Curnel -name nvidia?*` != '' ]];then
 		printf "\nNvidia modules are present already.\n\n"
 		exit
 	fi
@@ -52,6 +52,7 @@ exec tail -n +3 \$0
 # menu entries you want to add after this comment.  Be careful not to change
 # the 'exec tail' line above.
 `sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/fedora/grub.cfg | sed '/}/q' | sed 's/modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm//'`" | sudo tee /etc/grub.d/40_custom
+echo '# https://github.com/Superdanby/Grub-Nvidia-Entry' | sudo tee --append /etc/grub.d/40_custom
 
 if [[ `sudo cat /etc/grub.d/40_custom | grep rd.driver.blacklist=nouveau` == '' ]]; then
     sudo sed -i '/vmlinuz/s/$/ rd.driver.blacklist=nouveau/' /etc/grub.d/40_custom

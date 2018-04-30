@@ -11,8 +11,7 @@ grub-nvidia-entry.sh makes Grub load Nouveau instead of Nvidia drivers on normal
 *   Nvidia drivers from [Negativo17](negativo17.org) or [RPMfusion](https://rpmfusion.org/Howto/NVIDIA)
 
 ## Supported Operating Systems
-*   Fedora 27
-*   Fedora 26
+*   Fedora 26 ~ 28
 
 ## Instructions
 To make the script do everything automatically, run `make enable`. And to completely remove everything, run `make uninstall`.

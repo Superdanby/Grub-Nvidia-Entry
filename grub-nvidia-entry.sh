@@ -8,8 +8,8 @@ if [[ $1 != '-f' && $1 != '--force' ]];then
 		exit
 	fi
 
-	if [[ `sudo cat /etc/grub.d/40_custom | grep 'https://github.com/Superdanby/Grub-Nvidia-Entry'` == '' || `sudo find /lib/modules/$Curnel -name nvidia?*` != '' ]];then
-		printf "\nNvidia modules are present already.\n\n"
+	if [[ `sudo cat /etc/grub.d/40_custom | grep $Curnel` != '' && `sudo find /lib/modules/$Curnel -name nvidia?*` != '' ]];then
+		printf "\nThe custom menu is up to date, and the Nvidia modules are already present in the latest kernel.\n\n"
 		exit
 	fi
 fi

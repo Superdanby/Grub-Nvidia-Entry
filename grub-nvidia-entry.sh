@@ -63,6 +63,10 @@ fi
 if [[ `sudo cat /etc/grub.d/40_custom | grep nvidia-drm.modeset=1` == '' ]]; then
     sudo sed -i '/vmlinuz/s/$/ nvidia-drm.modeset=1/' /etc/grub.d/40_custom
 fi
+# Adding Nvidia in the title
+if [[ `sudo cat /etc/grub.d/40_custom | grep -w 'Fedora Nvidia'` == '' ]]; then
+    sudo sed -i '/^menuentry/s/Fedora/Fedora Nvidia/' /etc/grub.d/40_custom
+fi
 
 # sudo cat /etc/grub.d/40_custom
 

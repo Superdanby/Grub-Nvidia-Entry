@@ -2,8 +2,10 @@
 # https://github.com/Superdanby/Grub-Nvidia-Entry
 
 Curnel=`uname -r`
+grubFolder=$(echo `lsb_release -is` | awk '{print tolower($0)}')
+systemName=$(lsb_release -is)
 if [[ $1 != '-f' && $1 != '--force' ]];then
-	if [[ `sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/fedora/grub.cfg | sed '/}/q' | grep $Curnel` == '' ]]; then
+	if [[ `sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/$grubFolder/grub.cfg | sed '/}/q' | grep $Curnel` == '' ]]; then
 		printf "\nYou are not on the latest kernel.\n\n" 1>&2
 		exit 1
 	fi
@@ -53,7 +55,7 @@ exec tail -n +3 \$0
 # This file provides an easy way to add custom menu entries.  Simply type the
 # menu entries you want to add after this comment.  Be careful not to change
 # the 'exec tail' line above.
-`sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/fedora/grub.cfg | sed '/}/q' | sed 's/Fedora/Fedora(Nvidia)/' | sed 's/modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm//'`" | sudo tee $Custom > /dev/null
+`sudo sed -n '/^menuentry/,/}/p;' /boot/efi/EFI/$grubFolder/grub.cfg | sed '/}/q' | sed 's/'$systemName/$systemName'(Nvidia)/' | sed 's/modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm//'`" | sudo tee $Custom > /dev/null
 echo '# https://github.com/Superdanby/Grub-Nvidia-Entry' | sudo tee --append $Custom > /dev/null
 
 if [[ `sudo grep rd.driver.blacklist=nouveau $Custom` == '' ]]; then
@@ -65,14 +67,14 @@ fi
 if [[ `sudo grep nvidia-drm.modeset=1 $Custom` == '' ]]; then
     sudo sed -i '/vmlinuz/s/$/ nvidia-drm.modeset=1/' $Custom
 fi
-if [[ `sudo grep Fedora\(Nvidia\) $Custom` == '' || `sudo grep rd.driver.blacklist=nouveau $Custom` == '' || \
+if [[ `sudo grep $systemName\(Nvidia\) $Custom` == '' || `sudo grep rd.driver.blacklist=nouveau $Custom` == '' || \
 	`sudo grep modprobe.blacklist=nouveau $Custom` == '' || `sudo grep nvidia-drm.modeset=1 $Custom` == '' ]]; then
 	printf "\nFailed to configure custom grub entry.\n" 1>&2
 	exit 4
 fi
 # sudo cat $Custom
 sudo chmod 744 $Custom
-sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+sudo grub2-mkconfig -o /boot/efi/EFI/$grubFolder/grub.cfg
 
 # Runs only if the modules are unavailable.
 if [[ `sudo find /lib/ -name nvidia.ko | grep $Curnel` == '' ]]; then

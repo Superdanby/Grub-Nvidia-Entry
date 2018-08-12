@@ -1,5 +1,5 @@
 # Grub-Nvidia-Entry
-If you installed Nvidia drivers through [Negativo17](negativo17.org) or [RPMfusion](https://rpmfusion.org/Howto/NVIDIA), the Nvidia card would always be on by default. As the dedicated GPU consumes a lot of power, it is a significant problem to those using laptops.
+If you installed Nvidia drivers through [Negativo17](https://negativo17.org/nvidia-driver/) or [RPMfusion](https://rpmfusion.org/Howto/NVIDIA), the Nvidia card would always be on by default. As the dedicated GPU consumes a lot of power, it is a significant problem to those using laptops.
 
 `grub-nvidia-entry.sh` makes Grub load Nouveau instead of Nvidia drivers on normal basis and creates a new entry which loads Nvidia drivers.
 
@@ -8,7 +8,7 @@ If you installed Nvidia drivers through [Negativo17](negativo17.org) or [RPMfusi
 
 ## Prerequisites
 *   UEFI
-*   Nvidia drivers from [Negativo17](negativo17.org) or [RPMfusion](https://rpmfusion.org/Howto/NVIDIA)
+*   Nvidia drivers from [Negativo17](https://negativo17.org/nvidia-driver/) or [RPMfusion](https://rpmfusion.org/Howto/NVIDIA)
 
 ## Supported Operating Systems
 *   Fedora 26 ~ 28

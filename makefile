@@ -1,7 +1,7 @@
 .PHONY: disable enable force install run sign uninstall
 
 run:
-	/bin/bash grub-nvidia-entry.sh
+	./grub-nvidia-entry.sh
 
 disable:
 	sudo systemctl disable grub-nvidia-entry
@@ -10,7 +10,7 @@ enable: install
 	sudo systemctl enable grub-nvidia-entry
 
 force:
-	/bin/bash grub-nvidia-entry.sh -f
+	./grub-nvidia-entry.sh -f
 
 install:
 	-sudo rm /usr/bin/grub-nvidia-entry.sh || true

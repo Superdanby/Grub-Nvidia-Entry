@@ -34,9 +34,9 @@ if [[ `grep modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm $Dgru
     sudo sed -i "/GRUB_CMDLINE/s/\"/\ modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm\"/2" $Dgrub
 fi
 # Enables nouveau by default
-sudo sed -i 's/\<rd.driver.blacklist=nouveau\> //g' $Dgrub
-sudo sed -i 's/\<modprobe.blacklist=nouveau\> //g' $Dgrub
-sudo sed -i 's/\<nvidia-drm.modeset=1\> //g' $Dgrub
+sudo sed -i 's/\<rd.driver.blacklist=nouveau\>//g' $Dgrub
+sudo sed -i 's/\<modprobe.blacklist=nouveau\>//g' $Dgrub
+sudo sed -i 's/\<nvidia-drm.modeset=1\>//g' $Dgrub
 if [[ `grep modprobe.blacklist=nvidia,nvidia_drm,nvidia_modeset,nvidia_uvm $Dgrub` == '' || \
 	`grep rd.driver.blacklist=nouveau $Dgrub` || `grep modprobe.blacklist=nouveau $Dgrub` || \
 	`grep nvidia-drm.modeset=1 $Dgrub` ]]; then

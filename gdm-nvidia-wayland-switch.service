@@ -1,0 +1,12 @@
+[Unit]
+Description=GDM Nvidia Wayland Switch
+Requires=systemd-modules-load.service
+After=systemd-modules-load.service
+Before=gdm.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/gdm-nvidia-wayland-switch.sh
+
+[Install]
+WantedBy=gdm.service

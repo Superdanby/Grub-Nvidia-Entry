@@ -1,7 +1,7 @@
 .PHONY: disable enable force install run sign uninstall
 
 run:
-	/bin/bash grub-nvidia-entry.sh
+	./grub-nvidia-entry.sh
 
 disable:
 	sudo systemctl disable grub-nvidia-entry
@@ -12,7 +12,7 @@ enable: install
 	sudo systemctl enable gdm-nvidia-wayland-switch
 
 force:
-	/bin/bash grub-nvidia-entry.sh -f
+	./grub-nvidia-entry.sh -f
 
 install:
 	-sudo mv /etc/grub.d/40_custom.bak /etc/grub.d/40_custom || true
@@ -27,13 +27,12 @@ install:
 	sudo cp /etc/grub.d/40_custom /etc/grub.d/40_custom.bak
 	sudo cp grub-nvidia-entry.service /etc/systemd/system
 	sudo cp grub-nvidia-entry.sh /usr/bin
-	sudo chmod 775 /usr/bin/grub-nvidia-entry.sh
 	sudo cp gdm-nvidia-wayland-switch.service /etc/systemd/system
 	sudo cp gdm-nvidia-wayland-switch.sh /usr/bin
 	sudo cp nnswitch.sh /usr/bin
 
 sign:
-	/bin/bash SignNvidia.sh
+	/bin/sh SignNvidia.sh
 
 uninstall: disable
 	sudo rm /usr/bin/grub-nvidia-entry.sh

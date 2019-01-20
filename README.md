@@ -61,3 +61,7 @@ Full installation overwrites `/usr/lib/systemd/system/switcheroo-control.service
 *	RPM package
 *	Better documentation for user to check what went wrong.
 *	Gnome extension
+
+## Development Stopped
+
+I've switched to another laptop with AMD graphics card.
